@@ -4,6 +4,7 @@ const cors = require('cors');
 const sqlite3 = require('sqlite3').verbose();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const path = require('path');
 require('dotenv').config();
 
 const app = express();
@@ -387,6 +388,15 @@ app.get('/api/dashboard/stats', authenticateToken, (req, res) => {
       );
     }
   );
+});
+// ==================== SERVE REACT FRONTEND ====================
+
+// Serve React static files from frontend/build
+app.use(express.static(path.join(__dirname, '../frontend/build')));
+
+// Catch-all route: send React index.html for any non-API route
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/build', 'index.html'));
 });
 
 // Start server
