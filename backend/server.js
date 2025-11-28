@@ -395,7 +395,7 @@ app.get('/api/dashboard/stats', authenticateToken, (req, res) => {
 app.use(express.static(path.join(__dirname, '../frontend/build')));
 
 // Catch-all route: send React index.html for any non-API route
-app.get('*', (req, res) => {
+app.get((req, res) => {
   res.sendFile(path.join(__dirname, '../frontend/build', 'index.html'));
 });
 
